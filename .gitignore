@@ -1,10 +1,6 @@
 node_modules
 .vscode
 .env.dev
-.env.staging
-.env.prod
 .vscode/launch.json
 build
-public/api
-stripe
-sql/20*
+sql
