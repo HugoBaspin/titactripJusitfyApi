@@ -1,9 +1,6 @@
-/* eslint-disable no-param-reassign */
 import { utc } from "moment";
-import { dependencies } from "../config/dependencies";
+import { logger } from "../config/logger";
 import { Request, Response, NextFunction } from "express";
-
-const logger = dependencies.getLogger();
 
 export function errorLog(
   err: any,
@@ -20,7 +17,7 @@ export function errorLog(
     stack: err.stack,
     additionalInfo: err.additionalInfo,
   };
-  logger.log(err.level || "error", JSON.stringify(info));
+  logger().log(err.level || "error", JSON.stringify(info));
   res.status(err.statusCode || 500).json(err);
   return next();
 }

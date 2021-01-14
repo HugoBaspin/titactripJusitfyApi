@@ -4,9 +4,8 @@ import dotenv from "dotenv";
 import { IncomingMessage, ServerResponse } from "http";
 
 dotenv.config();
-import { dependencies } from "./config/dependencies";
 
-const logger = dependencies.getLogger();
+import { logger } from "./config/logger";
 import { log } from "./middlewares/logger";
 import { errorLog } from "./middlewares/errorLogger";
 
@@ -17,8 +16,8 @@ const routing = [
   // // GET    /test/database
   { prefix: "/test", router: require("./routes/test/database").router },
 
-  // // POST   /users/register
-  // { prefix: '/users', router: require('./src/users/register').router },
+  // // POST   /users/token
+  { prefix: "/token", router: require("./routes/users/login").router },
   // // POST   /users/login
   // { prefix: '/users', router: require('./src/users/login').router },
 ];
@@ -37,7 +36,7 @@ app.use(
       try {
         return JSON.stringify(buf);
       } catch (e) {
-        logger.log("info", {
+        logger().log("info", {
           error: "INVALID_JSON_BODY",
           additionalInfo: {
             headers: req.headers,
@@ -101,6 +100,9 @@ app.listen(process.env.NODE_LISTEN_PORT);
 console.log(
   `If you're running VSCode and don't see the log "Server running on port ${process.env.NODE_LISTEN_PORT} 🚀", check the README`
 );
-logger.log("info", `Server running on port ${process.env.NODE_LISTEN_PORT} 🚀`);
+logger().log(
+  "info",
+  `Server running on port ${process.env.NODE_LISTEN_PORT} 🚀`
+);
 
 module.exports = app;

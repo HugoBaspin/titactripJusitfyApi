@@ -1,8 +1,6 @@
 import { utc } from "moment";
-import { dependencies } from "../config/dependencies";
+import { logger } from "../config/logger";
 import { Request, Response, NextFunction } from "express";
-
-const logger = dependencies.getLogger();
 
 export function log(req: Request, res: Response, next: NextFunction) {
   const log = {
@@ -11,6 +9,6 @@ export function log(req: Request, res: Response, next: NextFunction) {
     path: req.path,
     code: res.statusCode,
   };
-  logger.log("info", JSON.stringify(log));
+  logger().log("info", JSON.stringify(log));
   return next();
 }

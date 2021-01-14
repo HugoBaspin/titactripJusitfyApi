@@ -2,7 +2,7 @@ function generateCustomError(
   level: string,
   error: Error,
   statusCode: number,
-  additionalInfo: any
+  additionalInfo?: any
 ) {
   return {
     level,
