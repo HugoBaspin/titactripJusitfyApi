@@ -1,14 +1,14 @@
 // Dependencies
-import express, { Request, Response, NextFunction, Router } from "express";
+import express, { Request, Response, NextFunction, Router } from 'express';
 
 const router: Router = express.Router();
 
 function controller(req: Request, res: Response, next: NextFunction) {
-  res.json({ text: "Hello World!" });
+  res.json({ text: 'Hello World!' });
   return next();
 }
 
-router.get("/", controller);
+router.get('/', controller);
 
 module.exports = {
   router,

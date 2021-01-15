@@ -14,13 +14,13 @@ function generateCustomError(
 }
 
 const level: any = {
-  ERROR: "error",
-  WARN: "warn",
-  INFO: "info",
-  HTTP: "http",
-  VERBOSE: "verbose",
-  DEBUG: "debug",
-  SILLY: "silly",
+  ERROR: 'error',
+  WARN: 'warn',
+  INFO: 'info',
+  HTTP: 'http',
+  VERBOSE: 'verbose',
+  DEBUG: 'debug',
+  SILLY: 'silly',
 };
 
 export { generateCustomError, level };

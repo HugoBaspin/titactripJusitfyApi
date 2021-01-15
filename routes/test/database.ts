@@ -1,32 +1,27 @@
 // Dependencies
-import express, { Request, Response, NextFunction, Router } from "express";
-import * as Db from "../../config/db";
-import { generateCustomError, level } from "../../config/error";
+import express, { Request, Response, NextFunction, Router } from 'express';
+import * as Db from '../../config/db';
+import { generateCustomError, level } from '../../config/error';
 
 const router: Router = express.Router();
 
 const controller = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const results: any = await Db._knex.raw("SELECT 42");
+    const results: any = await Db._knex.raw('SELECT 42');
     res.json({ success: true, result: results });
     return next();
   } catch (exc) {
     return next(
-      generateCustomError(
-        level.ERROR,
-        new Error("INTERNAL_SERVER_ERROR"),
-        500,
-        {
-          exc,
-          body: req.body,
-          headers: req.headers,
-        }
-      )
+      generateCustomError(level.ERROR, new Error('INTERNAL_SERVER_ERROR'), 500, {
+        exc,
+        body: req.body,
+        headers: req.headers,
+      })
     );
   }
 };
 
-router.get("/database", controller);
+router.get('/database', controller);
 
 module.exports = {
   router,

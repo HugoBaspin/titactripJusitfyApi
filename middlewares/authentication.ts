@@ -25,9 +25,7 @@ export = () => (req: Request, res: Response, next: NextFunction) => {
     try {
       credentials = Jwt.verifyToken(token);
     } catch (e) {
-      return next(
-        generateCustomError(level.INFO, new Error("UNAUTHORIZED"), 401)
-      );
+      return next(generateCustomError(level.INFO, new Error("BAD_JWT"), 401));
     }
     if (!!credentials && !!credentials.userId) {
       res.locals.requestUserId = credentials.userId;
