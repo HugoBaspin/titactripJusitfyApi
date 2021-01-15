@@ -1,5 +1,10 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module",

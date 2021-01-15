@@ -18,7 +18,7 @@ const _bookshelf: Bookshelf = Bookshelf(_knex);
 // These two lines convert all bigint values coming from Postgres from JS string to JS integer.
 // Removing these lines will mess up with Bookshelf count() methods and bigserial values
 pg.types.setTypeParser(20, "text", parseInt);
-const PG_DECIMAL_OID = 1700;
+const PG_DECIMAL_OID: number = 1700;
 pg.types.setTypeParser(PG_DECIMAL_OID, "text", parseFloat);
 
 _bookshelf.plugin(["bookshelf-camelcase"]);

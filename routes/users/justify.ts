@@ -1,34 +1,29 @@
 import express, { Request, Response, NextFunction } from "express";
-import Joi from "@hapi/joi";
-import * as Jwt from "../../lib/jwthelper";
+import moment from "moment";
+import authMiddleware from "../../middlewares/authentication";
 import { generateCustomError, level } from "../../config/error";
+import { justify, paymentRequired } from "../../lib/justifyhelper";
 import User from "../../models/user";
 
 const router = express.Router();
-const schema = Joi.object().keys({
-  email: Joi.string()
-    .email({ minDomainSegments: 2 })
-    .required(),
-});
 
 async function controller(req: Request, res: Response, next: NextFunction) {
-  const valid = schema.validate(req.body);
-  if (valid.error !== undefined) {
-    return next(
-      generateCustomError(level.INFO, new Error("BAD_REQUEST"), 400, {
-        error: valid.error.details,
-      })
-    );
-  }
-  const emailAddress: string = req.body.email;
-  let user;
+  let text: string = req.body.text;
+  const userId: number = res.locals.requestUserId;
+
   try {
-    user = await new User()
-      .where({ email: emailAddress })
-      .fetch({ require: false });
-    if (!user || user.attributes === {}) {
-      user = await new User({ email: emailAddress }).save();
+    const info: any = await paymentRequired(userId, text);
+    if (info.paymentRequired) {
+      return next(
+        generateCustomError(level.ERROR, new Error("PAYMENT_REQUIRED"), 402, {
+          userId,
+        })
+      );
     }
+    text = justify(text, 80);
+    await new User({ id: userId }).save({
+      words: info.userWords,
+    });
   } catch (exc) {
     return next(
       generateCustomError(
@@ -39,21 +34,11 @@ async function controller(req: Request, res: Response, next: NextFunction) {
       )
     );
   }
-  res.json({
-    user: {
-      id: user.get("id"),
-      emailAddress: user.get("email"),
-    },
-    JWT: Jwt.encryptToken(
-      JSON.stringify({
-        userId: user.get("id"),
-      })
-    ),
-  });
+  res.send(text);
   return next();
 }
 
-router.post("/", controller);
+router.post("/", authMiddleware(), controller);
 
 module.exports = {
   router,

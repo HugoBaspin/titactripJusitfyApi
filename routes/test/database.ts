@@ -1,13 +1,13 @@
 // Dependencies
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction, Router } from "express";
 import * as Db from "../../config/db";
 import { generateCustomError, level } from "../../config/error";
 
-const router = express.Router();
+const router: Router = express.Router();
 
 const controller = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const results = await Db._knex.raw("SELECT 42");
+    const results: any = await Db._knex.raw("SELECT 42");
     res.json({ success: true, result: results });
     return next();
   } catch (exc) {

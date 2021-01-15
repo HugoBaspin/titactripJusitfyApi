@@ -8,7 +8,7 @@ export function errorLog(
   res: Response,
   next: NextFunction
 ) {
-  const info = {
+  const info: any = {
     time: utc().format(),
     method: req.method,
     path: req.path,

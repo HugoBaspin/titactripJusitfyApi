@@ -3,7 +3,7 @@ import { logger } from "../config/logger";
 import { Request, Response, NextFunction } from "express";
 
 export function log(req: Request, res: Response, next: NextFunction) {
-  const log = {
+  const log: any = {
     time: utc().format(),
     method: req.method,
     path: req.path,

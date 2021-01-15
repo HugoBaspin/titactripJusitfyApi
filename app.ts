@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { IncomingMessage, ServerResponse } from "http";
@@ -13,13 +13,13 @@ import { errorLog } from "./middlewares/errorLogger";
 const routing = [
   // GET    /test
   { prefix: "/test", router: require("./routes/test/get").router },
-  // // GET    /test/database
+  // GET    /test/database
   { prefix: "/test", router: require("./routes/test/database").router },
 
-  // // POST   /users/token
+  // POST   /token
   { prefix: "/token", router: require("./routes/users/login").router },
-  // // POST   /users/login
-  // { prefix: '/users', router: require('./src/users/login').router },
+  // POST   /justify
+  { prefix: "/justify", router: require("./routes/users/justify").router },
 ];
 
 const app = express();
@@ -27,12 +27,7 @@ const app = express();
 // bodyParser configuration
 app.use(
   bodyParser.json({
-    verify: (
-      req: IncomingMessage,
-      res: ServerResponse,
-      buf: Buffer,
-      encoding: string
-    ) => {
+    verify: (req: Request, res: Response, buf: Buffer) => {
       try {
         return JSON.stringify(buf);
       } catch (e) {
@@ -54,6 +49,18 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.is("text/*")) {
+    req.body.text = "";
+    req.setEncoding("utf8");
+    req.on("data", function(chunk) {
+      req.body.text += chunk;
+    });
+    req.on("end", next);
+  } else {
+    next();
+  }
+});
 
 // OPTIONS method
 app.use((req, res, next) => {

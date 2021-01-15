@@ -49,11 +49,13 @@
     "@types/express": "^4.17.9",
     "bookshelf": "^1.2.0",
     "bookshelf-camelcase": "^2.0.1",
+    "count-words": "^1.0.13",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-cache-ctrl": "^1.0.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.15",
+    "moment": "^2.29.1",
     "pg": "^8.5.1",
     "ts-node": "^9.1.1"
   }
