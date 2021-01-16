@@ -57,13 +57,7 @@ export async function paymentRequired(userId: number, text: string) {
   const dateNow: moment.Moment = moment().utc();
   try {
     const user = await new User().where({ id: userId }).fetch({ require: true });
-    if (
-      dateNow.isAfter(
-        moment(user.get('checked'))
-          .utc()
-          .add(24, 'h')
-      )
-    ) {
+    if (!dateNow.isSame(moment(user.get('checked')).utc(), 'day')) {
       user.save({ words: 0, checked: dateNow });
       result = {
         paymentRequired: false,

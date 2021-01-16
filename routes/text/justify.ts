@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import authMiddleware from '../../middlewares/authentication';
 import { generateCustomError, level } from '../../config/error';
-import { justify, paymentRequired } from '../../lib/justifyhelper';
+import { justify, paymentRequired } from '../../services/justifyhelper';
 import User from '../../models/user';
 
 const router = express.Router();
@@ -24,6 +24,9 @@ async function controller(req: Request, res: Response, next: NextFunction) {
       words: info.userWords,
     });
   } catch (exc) {
+    if (exc.statusCode === 404) {
+      return next(exc);
+    }
     return next(generateCustomError(level.ERROR, new Error('INTERNAL_SERVER_ERROR'), 500, { exc }));
   }
   res.send(text);

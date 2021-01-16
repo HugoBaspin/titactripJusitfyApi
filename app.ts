@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: `../.env` });
 
 import { logger } from './config/logger';
 import { log } from './middlewares/logger';

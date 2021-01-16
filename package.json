@@ -4,10 +4,10 @@
   "description": "REST API to justify a text",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc --project ./ && node build/app.js",
     "build": "tsc",
-    "makedoc": "apidoc -i build/routes/ -f \".*\\.js$\" -o build/public/api/help/"
+    "makedoc": "apidoc -i build/routes/ -f \".*\\.js$\" -o build/public/api/help/",
+    "test": "cd test/ && ./test.sh"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Joi from '@hapi/joi';
-import * as Jwt from '../../lib/jwthelper';
+import * as Jwt from '../../services/jwthelper';
 import { generateCustomError, level } from '../../config/error';
 import User from '../../models/user';
 

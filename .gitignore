@@ -3,4 +3,3 @@ node_modules
 .env.dev
 .vscode/launch.json
 build
-sql
