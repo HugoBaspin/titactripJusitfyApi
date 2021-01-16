@@ -3,8 +3,6 @@
 # local: local PostgreSQL development environment
 # test: Gitlab test environment
 # dev: Amazon RDS PostgreSQL development environment
-# staging: Amazon RDS PostgreSQL staging environment
-# prod: Amazon RDS PostgreSQL production environment
 # Defaults to local
 
 echo 'ENV value: '${ENV}

@@ -1,5 +1,5 @@
 node_modules
 .vscode
-.env.dev
+.env-dev
 .vscode/launch.json
 build
